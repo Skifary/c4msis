@@ -25,10 +25,6 @@
 
 - (void)setUp {
     [super setUp];
-
-    CGFloat f = CGRectGetHeight([UIScreen mainScreen].bounds);
-
-    NSLog(@"");
 }
 
 - (void)tearDown {
