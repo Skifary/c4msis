@@ -13,6 +13,8 @@
 
 #import "PathUtility.h"
 
+#import "APPInfo.h"
+
 #pragma mark - category
 
 // uikit

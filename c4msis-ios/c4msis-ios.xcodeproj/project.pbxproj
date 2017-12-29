@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D51257591FF6940100FE1FD2 /* APPInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D51257581FF6940100FE1FD2 /* APPInfo.m */; };
 		D543FD311FC3D11600367C6B /* QRCodeDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D543FD2F1FC3D11600367C6B /* QRCodeDisplayViewController.m */; };
 		D543FD321FC3D11600367C6B /* QRCodeDisplayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D543FD301FC3D11600367C6B /* QRCodeDisplayViewController.xib */; };
 		D543FD351FC3FFF200367C6B /* ConfigurationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D543FD341FC3FFF200367C6B /* ConfigurationsTableViewController.m */; };
@@ -90,6 +91,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D51257571FF6940100FE1FD2 /* APPInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPInfo.h; sourceTree = "<group>"; };
+		D51257581FF6940100FE1FD2 /* APPInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPInfo.m; sourceTree = "<group>"; };
 		D52525A71FC15F810045954F /* Color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		D543FD2E1FC3D11600367C6B /* QRCodeDisplayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRCodeDisplayViewController.h; sourceTree = "<group>"; };
 		D543FD2F1FC3D11600367C6B /* QRCodeDisplayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCodeDisplayViewController.m; sourceTree = "<group>"; };
@@ -324,6 +327,8 @@
 				D57FAF811FD3F23F0081054D /* Foundation */,
 				D57FAF821FD3F2500081054D /* Log */,
 				D5897E8B1FC14B7000862DE8 /* Utility.h */,
+				D51257571FF6940100FE1FD2 /* APPInfo.h */,
+				D51257581FF6940100FE1FD2 /* APPInfo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -674,6 +679,7 @@
 				D5AF840A1FCED11800BAD0C2 /* ScanView.m in Sources */,
 				D5F856B31FD1515100554D37 /* UIImage+CIImage.m in Sources */,
 				D543FD311FC3D11600367C6B /* QRCodeDisplayViewController.m in Sources */,
+				D51257591FF6940100FE1FD2 /* APPInfo.m in Sources */,
 				D5D5DAA91FC08E740023E6B1 /* MainTableViewController.m in Sources */,
 				D5897E841FC12D8900862DE8 /* RadorView.m in Sources */,
 			);

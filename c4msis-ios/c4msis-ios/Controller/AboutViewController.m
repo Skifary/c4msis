@@ -8,7 +8,15 @@
 
 #import "AboutViewController.h"
 
+#import "APPInfo.h"
+
 @interface AboutViewController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *copyrightLabel;
 
 @end
 
@@ -16,22 +24,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    self.logoImageView.layer.cornerRadius = 10;
+    self.logoImageView.clipsToBounds = YES;
+    
+    self.infoLabel.textAlignment = NSTextAlignmentCenter;
+    self.infoLabel.text = [self info];
+    
+    self.copyrightLabel.textAlignment = NSTextAlignmentCenter;
+    self.copyrightLabel.text = [self copyright];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSString *)info {
+    
+    NSString* appName = [APPInfo name];
+    NSString* appVersion = [APPInfo version];
+    NSString* appBuild = [APPInfo build];
+    
+    return [NSString stringWithFormat:@"%@ V%@(%@)", appName, appVersion, appBuild];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSString *)copyright {
+    return @"Copyright © 2017 Skifary";
 }
-*/
 
 @end

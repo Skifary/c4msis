@@ -20,6 +20,8 @@
 
 #import "VPNManager.h"
 
+#import "AboutViewController.h"
+
 
 @interface MainTableViewController ()
 
@@ -30,6 +32,10 @@
 static NSString* kImageNameConnected = @"main_connected";
 
 static NSString* kImageNameDisconnected = @"main_disconnected";
+
+static NSString* kConfigurationNotFoundMessage = @"No Configutaion";
+
+static NSString* kConfigurationNotFoundTitle = @"Error";
 
 @implementation MainTableViewController
 
@@ -107,6 +113,7 @@ static NSString* kImageNameDisconnected = @"main_disconnected";
             if (error) {
                 NSLog(@"%@",error);
             }
+            [UIAlertController showMessage:kConfigurationNotFoundMessage withTitle:kConfigurationNotFoundTitle andPresenter:self];
         }];
     } else if (manager.status == VPNStatusConnected) {
         [manager disconnect];
@@ -146,14 +153,12 @@ static NSString* kImageNameDisconnected = @"main_disconnected";
     
     if (indexPath.row == 0) {
         // configurations
-        
         ConfigurationsTableViewController* ctvc = [[ConfigurationsTableViewController alloc] init];
-        
         [self.navigationController pushViewController:ctvc animated:YES];
     } else {
         // about
-
-        
+        AboutViewController* avc = [[AboutViewController alloc] init];
+        [self.navigationController pushViewController:avc animated:YES];
     }
     
 }
