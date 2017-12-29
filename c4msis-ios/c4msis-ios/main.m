@@ -10,9 +10,6 @@
 #import "AppDelegate.h"
 
 int main(int argc, char * argv[]) {
-    
-    printf("main");
-    
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

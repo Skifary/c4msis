@@ -47,13 +47,10 @@ static NSString* kCurrentConfigurationsKey = @"CurrentConfigurationsKey";
 - (void)save {
     
     NSString* path = [self configurationsArchiverPath];
-
     if (![NSKeyedArchiver archiveRootObject:self.configurations toFile:path]) {
         Log(@"archive failed")
     }
-    
     [[NSUserDefaults standardUserDefaults] setInteger:self.currentConfigurationIndex forKey:kCurrentConfigurationsKey];
-    
 }
 
 - (void)addConfiguration:(Configuration *)configuration {
@@ -74,6 +71,7 @@ static NSString* kCurrentConfigurationsKey = @"CurrentConfigurationsKey";
     if ([self.configurations indexOfObject:configuration] == self.currentConfigurationIndex) {
         self.currentConfigurationIndex = -1;
     }
+    
     [self.configurations removeObject:configuration];
     for (void (^block)(void)  in self.configurationsChangedBlock) {
         block();
@@ -98,11 +96,7 @@ static NSString* kCurrentConfigurationsKey = @"CurrentConfigurationsKey";
             self.configurations = [NSMutableArray array];
         }
 
-        if (self.configurations.count == 0) {
-            self.currentConfigurationIndex = -1;
-        } else {
-            self.currentConfigurationIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentConfigurationsKey];
-        }
+        self.currentConfigurationIndex = self.configurations.count == 0 ? -1 : [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentConfigurationsKey];
         
         self.configurationsChangedBlock = [NSMutableArray array];
     }
@@ -115,7 +109,6 @@ static NSString* kCurrentConfigurationsKey = @"CurrentConfigurationsKey";
 - (NSString *)configurationsArchiverPath {
     
     NSString* docPath = [PathUtility documentDirectory];
-    
     return [docPath stringByAppendingString:@"/configurations.archiver"];
 }
 

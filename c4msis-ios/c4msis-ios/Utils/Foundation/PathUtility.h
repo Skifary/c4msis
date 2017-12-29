@@ -10,6 +10,12 @@
 
 @interface PathUtility : NSObject
 
+
+/**
+ document 路径
+
+ @return document path
+ */
 + (NSString *)documentDirectory;
 
 @end

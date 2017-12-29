@@ -52,7 +52,6 @@
     [super viewDidLoad];
     
     [self setScanView];
-    
     [self setAlbumButton];
 }
 

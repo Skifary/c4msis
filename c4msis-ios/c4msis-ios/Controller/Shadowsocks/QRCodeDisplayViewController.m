@@ -19,9 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //self.imageView.backgroundColor = [UIColor redColor];
-
     self.imageView.image = [self.configuration qrcodeImageWithSize:self.imageView.frame.size];
 }
 

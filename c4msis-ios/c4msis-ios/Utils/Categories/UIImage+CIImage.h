@@ -10,6 +10,13 @@
 
 @interface UIImage (CIImage)
 
+/**
+ CIimage转换UIImage
+
+ @param ciImage ciimage
+ @param size size
+ @return uiimage
+ */
 + (UIImage *)imageFromCIImage:(CIImage *)ciImage withSize:(CGSize)size;
 
 @end

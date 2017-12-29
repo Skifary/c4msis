@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ConfigurationTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *checkedImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *detailButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *configurationNameLabel;
+
 @end

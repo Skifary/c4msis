@@ -121,7 +121,6 @@
     lShapleLayer.strokeColor = self.cornerColor.CGColor;
     lShapleLayer.fillColor = [UIColor clearColor].CGColor;
     [layer addSublayer:lShapleLayer];
-
     
     // 边框
     CAShapeLayer* borderLayer = [CAShapeLayer layer];
@@ -159,7 +158,6 @@
 - (void)removeScanAnimation {
  
     self.scanLayer.position = self.scanLayer.presentationLayer.position;
-    
     [self.scanLayer removeAllAnimations];
 }
 

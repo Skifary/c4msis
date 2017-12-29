@@ -75,7 +75,6 @@ static NSString* kConfigurationCellIdentifier = @"ConfigurationCellIdentifier";
         [cell.detailButton addTarget:self action:@selector(detailAction:) forControlEvents:UIControlEventTouchUpInside];
         cell.detailButton.tag = indexPath.row;
     }
-
     return cell;
 }
 

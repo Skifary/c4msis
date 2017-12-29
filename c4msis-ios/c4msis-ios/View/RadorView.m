@@ -108,14 +108,6 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
 
     [self stopAnimation];
-//    if (self.animationLayer) {
-//        [self.animationLayer removeFromSuperlayer];
-//        self.animationLayer = nil;
-//        if (self.animationCompleteBlock) {
-//            self.animationCompleteBlock();
-//            self.animationCompleteBlock = nil;
-//        }
-//    }
 }
 
 @end

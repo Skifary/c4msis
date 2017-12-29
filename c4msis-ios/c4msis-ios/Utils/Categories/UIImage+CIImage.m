@@ -21,7 +21,7 @@
     
     CGFloat scale = MIN(size.width / extentWidth, size.height / extentHeight);
     
-    // 创建bitmap（位图）;
+    // 创建bitmap
     size_t width = extentWidth * scale;
     size_t height = extentHeight * scale;
     
@@ -40,7 +40,6 @@
     
     return [UIImage imageWithCGImage:scaledImage];
 }
-
 
 
 @end

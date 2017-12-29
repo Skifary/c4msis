@@ -17,9 +17,7 @@ static NSString* kConfigurationCoderKeyHost = @"ConfigurationCoderKeyHost";
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
     
     [aCoder encodeInteger:self.type forKey:kConfigurationCoderKeyType];
-    
     [aCoder encodeObject:self.host forKey:kConfigurationCoderKeyHost];
-    
 }
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
@@ -28,7 +26,6 @@ static NSString* kConfigurationCoderKeyHost = @"ConfigurationCoderKeyHost";
     
     if (self) {
         self.type = [aDecoder decodeIntegerForKey:kConfigurationCoderKeyType];
-        
         self.host = [aDecoder decodeObjectForKey:kConfigurationCoderKeyHost];
     }
     

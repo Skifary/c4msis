@@ -10,7 +10,6 @@
 
 @interface ScanView : UIView
 
-
 // default is half of screen width
 @property (nonatomic, assign) CGFloat transparencyLength;
 

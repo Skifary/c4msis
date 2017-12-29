@@ -19,7 +19,6 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = kUITbaleViewBackgroundColor;
-    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 

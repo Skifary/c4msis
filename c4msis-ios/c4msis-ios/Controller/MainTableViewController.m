@@ -42,8 +42,6 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
 
 #pragma mark - property
 
-
-
 - (HeaderView *)headerView {
     
     if (!_headerView) {
@@ -162,7 +160,5 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
     }
     
 }
-
-
 
 @end

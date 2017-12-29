@@ -10,7 +10,6 @@
 
 @interface APPInfo : NSObject
 
-
 /**
  获取 APP 名称
 
@@ -18,14 +17,12 @@
  */
 + (NSString *)name;
 
-
 /**
  获取 APP 版本号
 
  @return app version
  */
 + (NSString *)version;
-
 
 /**
  获取 APP build

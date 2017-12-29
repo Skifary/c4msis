@@ -10,7 +10,6 @@
 
 @interface NSString (Base64)
 
-
 /**
  解码base64
 
@@ -18,7 +17,6 @@
  @return string
  */
 + (NSString *)decodeBase64String:(NSString *)base64String;
-
 
 /**
  编码base64
