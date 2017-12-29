@@ -65,7 +65,7 @@ static NSString* kConfigurationCellIdentifier = @"ConfigurationCellIdentifier";
    
     if (indexPath.row == self.configurationManager.configurations.count) {
         cell.checkedImageView.hidden = YES;
-        cell.configurationNameLabel.text = @"add new configuration";
+        cell.configurationNameLabel.text = @"Add New Configuration";
         cell.configurationNameLabel.textAlignment = NSTextAlignmentCenter;
         cell.detailButton.hidden = YES;
     } else {
