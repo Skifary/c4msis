@@ -110,8 +110,8 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
         [manager connect:^(NSError* error) {
             if (error) {
                 NSLog(@"%@",error);
+                [UIAlertController showMessage:kConfigurationNotFoundMessage withTitle:kConfigurationNotFoundTitle andPresenter:self];
             }
-            [UIAlertController showMessage:kConfigurationNotFoundMessage withTitle:kConfigurationNotFoundTitle andPresenter:self];
         }];
     } else if (manager.status == VPNStatusConnected) {
         [manager disconnect];
