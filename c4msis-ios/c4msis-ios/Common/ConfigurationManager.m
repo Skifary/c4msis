@@ -37,11 +37,11 @@ static NSString* kCurrentConfigurationsKey = @"CurrentConfigurationsKey";
 
 - (Configuration *)currentConfiguration {
     
-    if (self.currentConfigurationIndex == -1) {
-        return nil;
+    if (self.configurations.count > self.currentConfigurationIndex && self.currentConfigurationIndex >= 0 ) {
+        return self.configurations[self.currentConfigurationIndex];
     }
     
-    return self.configurations[self.currentConfigurationIndex];
+    return nil;
 }
 
 - (void)save {

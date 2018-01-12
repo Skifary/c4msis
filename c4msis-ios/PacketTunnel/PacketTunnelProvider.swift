@@ -14,13 +14,13 @@ import Yaml
 typealias SSConfig = (address: String, port: Int, method: String, password: String, yamlString: String)
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    
+
     var interface: TUNInterface!
-    
+
     var proxyPort: Int = 9090
-    
+
     var proxyServer: ProxyServer!
-    
+
     var lastPath:NWPath?
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
@@ -28,32 +28,32 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         DDLog.add(DDASLLogger.sharedInstance, with: DDLogLevel.info)
         ObserverFactory.currentFactory = DebugObserverFactory()
         NSLog("-------------")
-        
+
         guard let config = (protocolConfiguration as! NETunnelProviderProtocol).providerConfiguration else{
             NSLog("[ERROR] No ProtocolConfiguration Found")
             exit(EXIT_FAILURE)
         }
-        
+
         guard let networkSettings = networkSettings(from: config)  else {
             NSLog("[ERROR] NetworkSettings Is Nil")
             exit(EXIT_FAILURE)
         }
-        
+
         setTunnelNetworkSettings(networkSettings) { error in
             guard error == nil else {
                 DDLogError("Encountered an error setting up the network: \(error.debugDescription)")
                 completionHandler(error)
                 return
             }
-            
+
             self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort)))
             try! self.proxyServer.start()
-            
+
             completionHandler(nil)
         }
-        
+
     }
-    
+
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
 
         if(proxyServer != nil){
@@ -61,11 +61,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             proxyServer = nil
             RawSocketFactory.TunnelProvider = nil
         }
-        
+
         completionHandler()
         exit(EXIT_SUCCESS)
     }
-    
 }
 
 extension PacketTunnelProvider {
@@ -138,37 +137,32 @@ extension PacketTunnelProvider {
         let yamlString = ssConfig.yamlString
         let yamlValue = try! Yaml.load(yamlString)
         
-        var UserRules:[NEKit.Rule] = []
+        var userRules: [NEKit.Rule] = []
         
         for each in (yamlValue["rule"].array!) {
             
-            let adapter: NEKit.AdapterFactory
-            if each["adapter"].string! == "direct"{
-                adapter = directAdapterFactory
-            }else{
-                adapter = ssAdapterFactory
-            }
+            let adapter: NEKit.AdapterFactory = each["adapter"].string! == "direct" ? directAdapterFactory : ssAdapterFactory
             
             let ruleType = each["type"].string!
             switch ruleType {
             case "domainlist":
                 var ruleArray: [NEKit.DomainListRule.MatchCriterion] = []
                 for dom in each["criteria"].array!{
-                    let rawDom = dom.string?.split(separator: ",")
-                    let type = rawDom?[0]
-                    let url = String(describing: rawDom?[1])
-                    if type == "s"{
+                    let rawDom: NSString = NSString(string: dom.string!)
+                    let type = rawDom.substring(to: 1)
+                    let url = rawDom.substring(from: 2)
+                    if type == "s" {
                         ruleArray.append(DomainListRule.MatchCriterion.suffix(url))
-                    }else if type == "k"{
+                    } else if type == "k" {
                         ruleArray.append(DomainListRule.MatchCriterion.keyword(url))
-                    }else if type == "p"{
+                    } else if type == "p" {
                         ruleArray.append(DomainListRule.MatchCriterion.prefix(url))
                     }
                 }
-                UserRules.append(DomainListRule(adapterFactory: adapter, criteria: ruleArray))
+                userRules.append(DomainListRule(adapterFactory: adapter, criteria: ruleArray))
             case "iplist":
                 let ipArray = each["criteria"].array!.map{$0.string!}
-                UserRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
+                userRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
             default:
                 break
             }
@@ -180,14 +174,15 @@ extension PacketTunnelProvider {
         let dnsFailRule = DNSFailRule(adapterFactory: ssAdapterFactory)
         
         let allRule = AllRule(adapterFactory: ssAdapterFactory)
-        UserRules.append(contentsOf: [chinaRule, unknownLoc, dnsFailRule, allRule])
+        userRules.append(contentsOf: [chinaRule, unknownLoc, dnsFailRule, allRule])
         
-        let manager = RuleManager(fromRules: UserRules, appendDirect: true)
+        let manager = RuleManager(fromRules: userRules, appendDirect: true)
         
         RuleManager.currentManager = manager
     }
     
     func proxySettings() -> NEProxySettings {
+        
         let proxySettings = NEProxySettings()
         proxySettings.httpEnabled = true
         proxySettings.httpServer = NEProxyServer(address: "127.0.0.1", port: proxyPort)
@@ -204,7 +199,7 @@ extension PacketTunnelProvider {
     func networkSettings(from config: [String : Any]) -> NETunnelNetworkSettings? {
 
         guard let ssConfig = check(config: config) else {
-            NSLog("[ERROR] YAML Is Nil")
+            NSLog("[ERROR] ss config Is Nil")
             return nil;
         }
         

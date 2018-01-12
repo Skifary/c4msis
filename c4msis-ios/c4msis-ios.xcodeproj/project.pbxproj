@@ -442,7 +442,8 @@
 				D58DE1EF1FF111B900A8402E /* Sources */,
 				D58DE1F01FF111B900A8402E /* Frameworks */,
 				D58DE1F11FF111B900A8402E /* Resources */,
-				D5DADE831FF269A500B92FAB /* ShellScript */,
+				D5DADE831FF269A500B92FAB /* commonCryto script */,
+				D5C2D0EE2009125700FB8DD6 /* build Script */,
 			);
 			buildRules = (
 			);
@@ -461,7 +462,8 @@
 				D5D699EC1FBD717C004F4385 /* Frameworks */,
 				D5D699ED1FBD717C004F4385 /* Resources */,
 				D5FC68F61FC6F508004400D9 /* Embed App Extensions */,
-				D5DADE781FF24D1300B92FAB /* ShellScript */,
+				D5DADE781FF24D1300B92FAB /* copy framwork Script */,
+				D5C2D0EF2009129800FB8DD6 /* build script */,
 			);
 			buildRules = (
 			);
@@ -603,7 +605,35 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D5DADE781FF24D1300B92FAB /* ShellScript */ = {
+		D5C2D0EE2009125700FB8DD6 /* build Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "build Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION == Release ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n#increment the build number (ie 115 to 116)\nbuildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nexit 2\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\n\nfi";
+		};
+		D5C2D0EF2009129800FB8DD6 /* build script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "build script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION == Release ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n#increment the build number (ie 115 to 116)\nbuildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nexit 2\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\n\nfi";
+		};
+		D5DADE781FF24D1300B92FAB /* copy framwork Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -620,19 +650,21 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Resolver.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/NEKit.framework",
 			);
+			name = "copy framwork Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		D5DADE831FF269A500B92FAB /* ShellScript */ = {
+		D5DADE831FF269A500B92FAB /* commonCryto script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "commonCryto script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

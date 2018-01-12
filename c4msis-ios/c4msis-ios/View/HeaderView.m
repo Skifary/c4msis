@@ -23,7 +23,7 @@
         CGFloat height = CGRectGetHeight(self.frame);
         CGFloat x = CGRectGetMidX(self.frame);
         CGFloat y = CGRectGetMidY(self.frame);
-        CGFloat len = fminf(width, height)/3;
+        CGFloat len = fminf(width, height)*0.4;
         _button.frame = CGRectMake(x-len/2, y-len/2, len, len);
 
     }
@@ -32,7 +32,7 @@
 
 - (UILabel *)contentLabel {
     if (!_contentLabel) {
-        CGFloat y = CGRectGetMaxY(self.button.frame) + 40;
+        CGFloat y = CGRectGetMaxY(self.button.frame) + 50;
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, y, kScreenWidth, 20)];
         _contentLabel.textAlignment = NSTextAlignmentCenter;
         _contentLabel.textColor = [UIColor whiteColor];
