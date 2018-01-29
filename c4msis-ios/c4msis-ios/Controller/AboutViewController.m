@@ -45,7 +45,7 @@
 }
 
 - (NSString *)copyright {
-    return @"Copyright © 2017-2018 Skifary";
+    return @"Copyright © 2017-2018 Skifary. All rights reserved.";
 }
 
 @end
