@@ -36,7 +36,7 @@
 }
 
 - (NSString *)info {
-    
+
     NSString* appName = [APPInfo name];
     NSString* appVersion = [APPInfo version];
     NSString* appBuild = [APPInfo build];

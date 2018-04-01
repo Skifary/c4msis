@@ -47,26 +47,16 @@
     }
 
     [self loadProviderManager:^(NETunnelProviderManager* manager) {
-        [self saveProviderManager:manager configuration:config complete:^(NSError* error) {
-            if (error) {
-                complete(error);
-                return;
-            }
-            // add observer
-            if (!self.isAddObserver) {
-                self.isAddObserver = YES;
-                [NSNotificationCenter.defaultCenter addObserverForName:NEVPNStatusDidChangeNotification object:manager.connection queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-                    [self updateVPNStatus:manager.connection.status];
-                }];
-            }
-            [manager.connection startVPNTunnelWithOptions:nil andReturnError:&error];
+        NSError* error;
+        [manager.connection startVPNTunnelWithOptions:nil andReturnError:&error];
+        
+        if (complete) {
             complete(error);
-        }];
+        }
     }];
 }
 
 - (void)disconnect {
-
     [self loadProviderManager:^(NETunnelProviderManager* manager) {
         [manager.connection stopVPNTunnel];
     }];
@@ -132,9 +122,32 @@
             manager = [self createProviderManager];
         }
         manager.enabled = YES;
-        if (complete) {
-            complete(manager);
+        Configuration* config = [[ConfigurationManager manager] currentConfiguration];
+        
+        if (!config) {
+            if (complete) {
+                complete(nil);
+            }
+            return;
         }
+        [self saveProviderManager:manager configuration:config complete:^(NSError* error) {
+            if (error) {
+                if (complete) {
+                    complete(nil);
+                }
+                return;
+            }
+            // add observer
+            if (!self.isAddObserver) {
+                self.isAddObserver = YES;
+                [NSNotificationCenter.defaultCenter addObserverForName:NEVPNStatusDidChangeNotification object:manager.connection queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+                    [self updateVPNStatus:manager.connection.status];
+                }];
+            }
+            if (complete) {
+                complete(manager);
+            }
+        }];
     }];
 }
 

@@ -24,7 +24,7 @@ static NSString* kImageNameShowPassword = @"sc_show_password";
 
 static NSString* kImageNameHidePassword = @"sc_hide_password";
 
-static NSString* kDoneTitle = @"done";
+static NSString* kDoneTitle = @"Done";
 
 static NSString* kDeleteAlertTitle = @"Delete";
 
