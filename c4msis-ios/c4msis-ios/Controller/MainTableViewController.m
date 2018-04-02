@@ -22,6 +22,8 @@
 
 #import "AboutViewController.h"
 
+#import "ScanQRCodeViewController.h"
+
 
 @interface MainTableViewController ()
 
@@ -141,6 +143,12 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
             self.headerView.contentLabel.text = @"Disconnect";
             break;
     }
+}
+
+- (IBAction)scan:(id)sender {
+    ScanQRCodeViewController* sqrcvc = [[ScanQRCodeViewController alloc] init];
+    
+    [self.navigationController pushViewController:sqrcvc animated:YES];
 }
 
 #pragma mark - UITableViewDelegate
