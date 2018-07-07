@@ -15,6 +15,8 @@
 #import "ScanView.h"
 #import "ConfigurationManager.h"
 
+#import <Photos/Photos.h>
+
 @interface ScanQRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong,nonatomic)AVCaptureDevice* device;
@@ -32,11 +34,8 @@
 @implementation ScanQRCodeViewController
 
 - (void)loadView {
-    
     ScanView* view = [[ScanView alloc] initWithFrame:kScreenFrame];
-    
     view.transparencyLength = self.scaleOfInterest*kScreenWidth;
-    
     self.view = view;
 }
 
@@ -53,25 +52,36 @@
     
     [self setScanView];
     [self setAlbumButton];
+
 }
 
 - (void)setAlbumButton {
-    
     self.navigationItem.rightBarButtonItem= [[UIBarButtonItem alloc] initWithTitle:@"Album" style:UIBarButtonItemStylePlain target:self action:@selector(albumButtonAction:)];
-    
 }
 
 - (void)albumButtonAction:(id)sender {
-   
+    if ([self hasPhotoAuthority]) {
+        [self showPhotoPicker];
+    } else {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status == PHAuthorizationStatusAuthorized) {
+                [self showPhotoPicker];
+            } else {
+                [UIAlertController showMessage:@"相册未授权，请去设置中授权" withTitle:@"授权失败" andPresenter:self];
+            }
+        }];
+    }
+}
+
+- (void)showPhotoPicker {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
-    
 }
 
 - (void)setScanView {
-    
+
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
     self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
@@ -116,6 +126,28 @@
         return YES;
     }
     return NO;
+}
+
++ (BOOL)hasCameraAuthority {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)hasPhotoAuthority {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusAuthorized) {
+        return YES;
+    }
+    return NO;
+}
+
++ (void)requestAuthor:(void (^)(BOOL granted))complete {
+    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+        complete(granted);
+    }];
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate

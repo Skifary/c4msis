@@ -13,4 +13,8 @@
 // 扫描区域占横屏的比例 0~1,default is 0.75
 @property(nonatomic, assign) CGFloat scaleOfInterest;
 
++ (BOOL)hasCameraAuthority;
+
++ (void)requestAuthor:(void (^)(BOOL granted))complete;
+
 @end

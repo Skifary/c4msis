@@ -24,6 +24,10 @@
 
 #import "ScanQRCodeViewController.h"
 
+#import <AVFoundation/AVFoundation.h>
+
+#import "UIAlertController+Message.h"
+
 
 @interface MainTableViewController ()
 
@@ -146,9 +150,19 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
 }
 
 - (IBAction)scan:(id)sender {
-    ScanQRCodeViewController* sqrcvc = [[ScanQRCodeViewController alloc] init];
-    
-    [self.navigationController pushViewController:sqrcvc animated:YES];
+    if (![ScanQRCodeViewController hasCameraAuthority]) {
+        [ScanQRCodeViewController requestAuthor:^(BOOL granted) {
+            if (granted) {
+                ScanQRCodeViewController* sqrcvc = [[ScanQRCodeViewController alloc] init];
+                [self.navigationController pushViewController:sqrcvc animated:YES];
+            }else {
+                [UIAlertController showMessage:@"相机未授权，请去设置中授权" withTitle:@"授权失败" andPresenter:self];
+            }
+        }];
+    } else {
+        ScanQRCodeViewController* sqrcvc = [[ScanQRCodeViewController alloc] init];
+        [self.navigationController pushViewController:sqrcvc animated:YES];
+    }
 }
 
 #pragma mark - UITableViewDelegate
