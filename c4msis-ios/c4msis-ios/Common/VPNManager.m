@@ -188,6 +188,14 @@
     return ret;
 }
 
+//- (NSString *)yamlConf {
+//
+//    NSString* path = [[NSBundle mainBundle] pathForResource:@"NEKitRule" ofType:@"conf"];
+//    NSData* data = [NSData dataWithContentsOfFile:path];
+//
+//    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//}
+
 - (NSString *)yamlConf {
     
     NSString* path = [[NSBundle mainBundle] pathForResource:@"NEKitRule" ofType:@"conf"];

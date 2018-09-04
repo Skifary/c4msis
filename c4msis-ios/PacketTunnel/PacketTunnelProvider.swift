@@ -19,8 +19,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     var proxyPort: Int = 9090
 
-    var proxyServer: ProxyServer!
+    var httpServer: ProxyServer!
 
+    var socks5Server: ProxyServer!
+    
     var lastPath:NWPath?
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
@@ -46,9 +48,23 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 return
             }
 
-            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort)))
-            try! self.proxyServer.start()
-
+            self.httpServer = GCDHTTPProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort)))
+            
+            self.socks5Server = GCDSOCKS5ProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort + 1)))
+           // try! self.httpServer.start()
+            do {
+                try self.httpServer.start()
+                try self.socks5Server.start()
+            } catch let error {
+               // Utils.alertError("Encounter an error when starting proxy server. \(error)")
+                self.httpServer.stop()
+                self.socks5Server.stop()
+                //return false
+                
+                completionHandler(error)
+            }
+            
+            
             completionHandler(nil)
         }
 
@@ -56,9 +72,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
 
-        if(proxyServer != nil){
-            proxyServer.stop()
-            proxyServer = nil
+        if(httpServer != nil){
+            httpServer.stop()
+            httpServer = nil
+            RawSocketFactory.TunnelProvider = nil
+        }
+        if(socks5Server != nil){
+            socks5Server.stop()
+            socks5Server = nil
             RawSocketFactory.TunnelProvider = nil
         }
 
@@ -132,7 +153,7 @@ extension PacketTunnelProvider {
         
         let ssAdapterFactory = shadowsocksAdapterFactory(from: ssConfig)
         let directAdapterFactory = DirectAdapterFactory()
-        
+
         //Get lists from conf
         let yamlString = ssConfig.yamlString
         let yamlValue = try! Yaml.load(yamlString)
@@ -163,9 +184,12 @@ extension PacketTunnelProvider {
             case "iplist":
                 let ipArray = each["criteria"].array!.map{$0.string!}
                 userRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
+                
             default:
                 break
             }
+            
+            //Configuration
         }
         
         // Rules
