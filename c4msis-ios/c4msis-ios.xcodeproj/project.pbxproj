@@ -64,10 +64,14 @@
 		D59C1F1B213DA04300CC9C81 /* stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D59C1EFD213DA04300CC9C81 /* stream.cpp */; };
 		D59C1F1C213DA04300CC9C81 /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D59C1EFE213DA04300CC9C81 /* exceptions.cpp */; };
 		D59C1F1D213DA04300CC9C81 /* emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D59C1EFF213DA04300CC9C81 /* emitter.cpp */; };
+		D5A26CDA213EEFA5000265E4 /* YAMLCoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5A26CD8213EEFA5000265E4 /* YAMLCoder.cpp */; };
+		D5A26CDD213EF03C000265E4 /* YAMLDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5A26CDB213EF03C000265E4 /* YAMLDecoder.cpp */; };
 		D5A3E29B1FC194F100A62CB6 /* NewConfigurationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E29A1FC194F100A62CB6 /* NewConfigurationTableViewController.m */; };
 		D5A3E2A41FC19A0100A62CB6 /* ShadowsocksConfigurationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E2A21FC19A0100A62CB6 /* ShadowsocksConfigurationTableViewController.m */; };
 		D5A3E2AA1FC1A55300A62CB6 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E2A91FC1A55300A62CB6 /* UIColor+Hex.m */; };
 		D5AF840A1FCED11800BAD0C2 /* ScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AF84091FCED11800BAD0C2 /* ScanView.m */; };
+		D5C40E162141834400CFBBD0 /* CustomRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C40E152141834400CFBBD0 /* CustomRuleViewController.m */; };
+		D5C40E1821418E9800CFBBD0 /* custom.rule in Resources */ = {isa = PBXBuildFile; fileRef = D5C40E1721418E9800CFBBD0 /* custom.rule */; };
 		D5D5DAA91FC08E740023E6B1 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D5DAA81FC08E740023E6B1 /* MainTableViewController.m */; };
 		D5D699F41FBD717C004F4385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D699F31FBD717C004F4385 /* AppDelegate.m */; };
 		D5D699FA1FBD717C004F4385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D699F81FBD717C004F4385 /* Main.storyboard */; };
@@ -227,6 +231,10 @@
 		D59C1EFD213DA04300CC9C81 /* stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stream.cpp; sourceTree = "<group>"; };
 		D59C1EFE213DA04300CC9C81 /* exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exceptions.cpp; sourceTree = "<group>"; };
 		D59C1EFF213DA04300CC9C81 /* emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emitter.cpp; sourceTree = "<group>"; };
+		D5A26CD8213EEFA5000265E4 /* YAMLCoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = YAMLCoder.cpp; sourceTree = "<group>"; };
+		D5A26CD9213EEFA5000265E4 /* YAMLCoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = YAMLCoder.hpp; sourceTree = "<group>"; };
+		D5A26CDB213EF03C000265E4 /* YAMLDecoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = YAMLDecoder.cpp; sourceTree = "<group>"; };
+		D5A26CDC213EF03C000265E4 /* YAMLDecoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = YAMLDecoder.hpp; sourceTree = "<group>"; };
 		D5A3E2991FC194F100A62CB6 /* NewConfigurationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewConfigurationTableViewController.h; sourceTree = "<group>"; };
 		D5A3E29A1FC194F100A62CB6 /* NewConfigurationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewConfigurationTableViewController.m; sourceTree = "<group>"; };
 		D5A3E2A11FC19A0100A62CB6 /* ShadowsocksConfigurationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowsocksConfigurationTableViewController.h; sourceTree = "<group>"; };
@@ -235,6 +243,9 @@
 		D5A3E2A91FC1A55300A62CB6 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		D5AF84081FCED11800BAD0C2 /* ScanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanView.h; sourceTree = "<group>"; };
 		D5AF84091FCED11800BAD0C2 /* ScanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanView.m; sourceTree = "<group>"; };
+		D5C40E142141834400CFBBD0 /* CustomRuleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomRuleViewController.h; sourceTree = "<group>"; };
+		D5C40E152141834400CFBBD0 /* CustomRuleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomRuleViewController.m; sourceTree = "<group>"; };
+		D5C40E1721418E9800CFBBD0 /* custom.rule */ = {isa = PBXFileReference; lastKnownFileType = text; path = custom.rule; sourceTree = "<group>"; };
 		D5D5DAA71FC08E740023E6B1 /* MainTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
 		D5D5DAA81FC08E740023E6B1 /* MainTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
 		D5D699EF1FBD717C004F4385 /* c4msis-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "c4msis-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +332,10 @@
 				D5F856AC1FD0F07700554D37 /* QRCoder.m */,
 				D59C1EC8213D9FC000CC9C81 /* YAMLHelper.h */,
 				D59C1EC9213D9FC000CC9C81 /* YAMLHelper.mm */,
+				D5A26CD8213EEFA5000265E4 /* YAMLCoder.cpp */,
+				D5A26CD9213EEFA5000265E4 /* YAMLCoder.hpp */,
+				D5A26CDB213EF03C000265E4 /* YAMLDecoder.cpp */,
+				D5A26CDC213EF03C000265E4 /* YAMLDecoder.hpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -394,6 +409,8 @@
 				D5A3E29A1FC194F100A62CB6 /* NewConfigurationTableViewController.m */,
 				D5472E911FC867C5008EDC59 /* BasicTableViewController.h */,
 				D5472E921FC867C5008EDC59 /* BasicTableViewController.m */,
+				D5C40E142141834400CFBBD0 /* CustomRuleViewController.h */,
+				D5C40E152141834400CFBBD0 /* CustomRuleViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -404,6 +421,7 @@
 				D5FF81911FEFF734007F0F8A /* NEKitRule.conf */,
 				D5D699FD1FBD717C004F4385 /* LaunchScreen.storyboard */,
 				D5D699FB1FBD717C004F4385 /* Assets.xcassets */,
+				D5C40E1721418E9800CFBBD0 /* custom.rule */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -755,6 +773,7 @@
 				D5D699FC1FBD717C004F4385 /* Assets.xcassets in Resources */,
 				D5D699FA1FBD717C004F4385 /* Main.storyboard in Resources */,
 				D543FD451FC422EC00367C6B /* AboutViewController.xib in Resources */,
+				D5C40E1821418E9800CFBBD0 /* custom.rule in Resources */,
 				D543FD321FC3D11600367C6B /* QRCodeDisplayViewController.xib in Resources */,
 				D5FF81921FEFF734007F0F8A /* NEKitRule.conf in Resources */,
 				D58789E11FC99CE80071A9C1 /* ConfigurationTableViewCell.xib in Resources */,
@@ -859,6 +878,7 @@
 				D59C1F18213DA04300CC9C81 /* null.cpp in Sources */,
 				D59C1F07213DA04300CC9C81 /* parse.cpp in Sources */,
 				D5472E961FC87003008EDC59 /* StaticRadioTableViewCell.m in Sources */,
+				D5A26CDA213EEFA5000265E4 /* YAMLCoder.cpp in Sources */,
 				D59C1F08213DA04300CC9C81 /* emitterstate.cpp in Sources */,
 				D543FD3B1FC404CD00367C6B /* MethodTableViewController.m in Sources */,
 				D59C1F17213DA04300CC9C81 /* nodeevents.cpp in Sources */,
@@ -877,6 +897,7 @@
 				D59C1F13213DA04300CC9C81 /* singledocparser.cpp in Sources */,
 				D5A3E2AA1FC1A55300A62CB6 /* UIColor+Hex.m in Sources */,
 				D59C1F06213DA04300CC9C81 /* tag.cpp in Sources */,
+				D5C40E162141834400CFBBD0 /* CustomRuleViewController.m in Sources */,
 				D543FD491FC425D100367C6B /* ShadowsocksConfiguration.m in Sources */,
 				D59C1F0D213DA04300CC9C81 /* emitfromevents.cpp in Sources */,
 				D543FD381FC404AA00367C6B /* ProxyRuleTableViewController.m in Sources */,
@@ -900,6 +921,7 @@
 				D5472E931FC867C5008EDC59 /* BasicTableViewController.m in Sources */,
 				D5472E901FC7C7AE008EDC59 /* VPNManager.m in Sources */,
 				D59C1F0C213DA04300CC9C81 /* scanscalar.cpp in Sources */,
+				D5A26CDD213EF03C000265E4 /* YAMLDecoder.cpp in Sources */,
 				D59C1F05213DA04300CC9C81 /* nodebuilder.cpp in Sources */,
 				D543FD441FC422EC00367C6B /* AboutViewController.m in Sources */,
 				D58789DC1FC9667D0071A9C1 /* PathUtility.m in Sources */,

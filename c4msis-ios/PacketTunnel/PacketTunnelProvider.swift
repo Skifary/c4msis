@@ -11,7 +11,7 @@ import NEKit
 import CocoaLumberjackSwift
 import Yaml
 
-typealias SSConfig = (address: String, port: Int, method: String, password: String, yamlString: String)
+typealias SSConfig = (address: String, port: Int, method: String, password: String, yamlString: String, customRules: String)
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
 
@@ -51,19 +51,17 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             self.httpServer = GCDHTTPProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort)))
             
             self.socks5Server = GCDSOCKS5ProxyServer(address: IPAddress(fromString: "127.0.0.1"), port: NEKit.Port(port: UInt16(self.proxyPort + 1)))
-           // try! self.httpServer.start()
+ 
             do {
                 try self.httpServer.start()
                 try self.socks5Server.start()
             } catch let error {
-               // Utils.alertError("Encounter an error when starting proxy server. \(error)")
+                
                 self.httpServer.stop()
                 self.socks5Server.stop()
-                //return false
                 
                 completionHandler(error)
             }
-            
             
             completionHandler(nil)
         }
@@ -116,8 +114,13 @@ extension PacketTunnelProvider {
             NSLog("[ERROR] YAML Is Nil")
             return nil
         }
-    
-        return (ssAddress, ssPort, ssMethod, ssPassword, ssYAMLStr);
+        
+        guard let ssCustomRule = config["custome_rule"] as? String  else {
+            NSLog("[ERROR] Custome Rule Is Nil")
+            return nil
+        }
+        
+        return (ssAddress, ssPort, ssMethod, ssPassword, ssYAMLStr, ssCustomRule)
     }
     
     func shadowsocksAdapterFactory(from ssConfig: SSConfig) -> ShadowsocksAdapterFactory {
@@ -154,44 +157,48 @@ extension PacketTunnelProvider {
         let ssAdapterFactory = shadowsocksAdapterFactory(from: ssConfig)
         let directAdapterFactory = DirectAdapterFactory()
 
-        //Get lists from conf
-        let yamlString = ssConfig.yamlString
-        let yamlValue = try! Yaml.load(yamlString)
+//        //Get lists from conf
+//        let yamlString = ssConfig.yamlString
+//        let yamlValue = try! Yaml.load(yamlString)
+//
+//        var userRules: [NEKit.Rule] = []
+//
+//        for each in (yamlValue["rule"].array!) {
+//
+//            let adapter: NEKit.AdapterFactory = each["adapter"].string! == "direct" ? directAdapterFactory : ssAdapterFactory
+//
+//            let ruleType = each["type"].string!
+//            switch ruleType {
+//            case "domainlist":
+//                var ruleArray: [NEKit.DomainListRule.MatchCriterion] = []
+//                for dom in each["criteria"].array!{
+//                    let rawDom: NSString = NSString(string: dom.string!)
+//                    let type = rawDom.substring(to: 1)
+//                    let url = rawDom.substring(from: 2)
+//                    if type == "s" {
+//                        ruleArray.append(DomainListRule.MatchCriterion.suffix(url))
+//                    } else if type == "k" {
+//                        ruleArray.append(DomainListRule.MatchCriterion.keyword(url))
+//                    } else if type == "p" {
+//                        ruleArray.append(DomainListRule.MatchCriterion.prefix(url))
+//                    }
+//                }
+//                userRules.append(DomainListRule(adapterFactory: adapter, criteria: ruleArray))
+//            case "iplist":
+//                let ipArray = each["criteria"].array!.map{$0.string!}
+//                userRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
+//
+//            default:
+//                break
+//            }
+//
+//        }
         
         var userRules: [NEKit.Rule] = []
         
-        for each in (yamlValue["rule"].array!) {
-            
-            let adapter: NEKit.AdapterFactory = each["adapter"].string! == "direct" ? directAdapterFactory : ssAdapterFactory
-            
-            let ruleType = each["type"].string!
-            switch ruleType {
-            case "domainlist":
-                var ruleArray: [NEKit.DomainListRule.MatchCriterion] = []
-                for dom in each["criteria"].array!{
-                    let rawDom: NSString = NSString(string: dom.string!)
-                    let type = rawDom.substring(to: 1)
-                    let url = rawDom.substring(from: 2)
-                    if type == "s" {
-                        ruleArray.append(DomainListRule.MatchCriterion.suffix(url))
-                    } else if type == "k" {
-                        ruleArray.append(DomainListRule.MatchCriterion.keyword(url))
-                    } else if type == "p" {
-                        ruleArray.append(DomainListRule.MatchCriterion.prefix(url))
-                    }
-                }
-                userRules.append(DomainListRule(adapterFactory: adapter, criteria: ruleArray))
-            case "iplist":
-                let ipArray = each["criteria"].array!.map{$0.string!}
-                userRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
-                
-            default:
-                break
-            }
-            
-            //Configuration
-        }
-        
+        parseYAMLRule(ssConfig.yamlString, ssAdapterFactory, directAdapterFactory, &userRules)
+        parseYAMLRule(ssConfig.customRules, ssAdapterFactory, directAdapterFactory, &userRules)
+
         // Rules
         let chinaRule = CountryRule(countryCode: "CN", match: true, adapterFactory: directAdapterFactory)
         let unknownLoc = CountryRule(countryCode: "--", match: true, adapterFactory: directAdapterFactory)
@@ -238,6 +245,42 @@ extension PacketTunnelProvider {
         networkSettings.proxySettings = proxySettings()
         
         return networkSettings
+    }
+    
+    func parseYAMLRule(_ yamlString: String, _ ssAdapterFactory: ShadowsocksAdapterFactory, _ directAdapterFactory: DirectAdapterFactory, _ userRules: inout [NEKit.Rule]) {
+        let yamlValue = try! Yaml.load(yamlString)
+        
+
+        for each in (yamlValue["rule"].array!) {
+            
+            let adapter: NEKit.AdapterFactory = each["adapter"].string! == "direct" ? directAdapterFactory : ssAdapterFactory
+            
+            let ruleType = each["type"].string!
+            switch ruleType {
+            case "domainlist":
+                var ruleArray: [NEKit.DomainListRule.MatchCriterion] = []
+                for dom in each["criteria"].array!{
+                    let rawDom: NSString = NSString(string: dom.string!)
+                    let type = rawDom.substring(to: 1)
+                    let url = rawDom.substring(from: 2)
+                    if type == "s" {
+                        ruleArray.append(DomainListRule.MatchCriterion.suffix(url))
+                    } else if type == "k" {
+                        ruleArray.append(DomainListRule.MatchCriterion.keyword(url))
+                    } else if type == "p" {
+                        ruleArray.append(DomainListRule.MatchCriterion.prefix(url))
+                    }
+                }
+                userRules.append(DomainListRule(adapterFactory: adapter, criteria: ruleArray))
+            case "iplist":
+                let ipArray = each["criteria"].array!.map{$0.string!}
+                userRules.append(try! IPRangeListRule(adapterFactory: adapter, ranges: ipArray))
+                
+            default:
+                break
+            }
+            
+        }
     }
 
 }

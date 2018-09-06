@@ -8,23 +8,15 @@
 
 #import "YAMLHelper.h"
 
+#include "YAMLCoder.hpp"
 
-#include <yaml-cpp/yaml.h>
-
-
-class test {
-    
-    
-public:
-    static void t() { printf("hello world"); };
-};
 
 @implementation YAMLHelper
 
 + (void)load {
     
     
-    test::t();
+    
     
 }
 

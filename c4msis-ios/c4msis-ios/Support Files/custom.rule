@@ -1,0 +1,7 @@
+rule:
+#custom rules
+  - type: domainlist
+    adapter: proxyAdapter
+    criteria:
+      - k,whatsapp
+      - k,tumblr

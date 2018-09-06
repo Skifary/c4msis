@@ -9,24 +9,16 @@
 #import "MainTableViewController.h"
 
 #import "Utility.h"
-
 #include "HeaderView.h"
-
 #import "Color.h"
-
 #import "RadorView.h"
-
 #import "ConfigurationsTableViewController.h"
-
 #import "VPNManager.h"
-
 #import "AboutViewController.h"
-
 #import "ScanQRCodeViewController.h"
-
-#import <AVFoundation/AVFoundation.h>
-
 #import "UIAlertController+Message.h"
+
+#import "CustomRuleViewController.h"
 
 
 @interface MainTableViewController ()
@@ -175,11 +167,47 @@ static NSString* kConfigurationNotFoundTitle = @"Error";
         // configurations
         ConfigurationsTableViewController* ctvc = [[ConfigurationsTableViewController alloc] init];
         [self.navigationController pushViewController:ctvc animated:YES];
+        
+            
+    } else if (indexPath.row == 1){
+        // custom rule
+        
+        
+        
     } else {
         // about
         AboutViewController* avc = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:avc animated:YES];
     }
+    
+    switch (indexPath.row) {
+        case 0:
+            {
+                // configurations
+                ConfigurationsTableViewController* ctvc = [[ConfigurationsTableViewController alloc] init];
+                [self.navigationController pushViewController:ctvc animated:YES];
+            }
+            break;
+        case 1:
+        {
+            // custom rules
+            CustomRuleViewController* crvc = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"CustomRuleViewController"];
+            [self.navigationController pushViewController:crvc animated:YES];
+            
+        }
+            break;
+        case 2:
+        {
+            // about
+            AboutViewController* avc = [[AboutViewController alloc] init];
+            [self.navigationController pushViewController:avc animated:YES];
+            
+        }
+            break;
+        default:
+            break;
+    }
+    
     
 }
 

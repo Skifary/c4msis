@@ -13,6 +13,7 @@
 #import "ConfigurationManager.h"
 
 #import <NetworkExtension/NetworkExtension.h>
+#import "CustomRuleViewController.h"
 
 @interface VPNManager()
 
@@ -210,7 +211,9 @@
                           @"ss_port" : @(config.port.integerValue),
                           @"ss_method" : config.methodString,
                           @"ss_password" : config.password,
-                          @"ymal_conf" : [self yamlConf]};
+                          @"ymal_conf" : [self yamlConf],
+                          @"custome_rule" : [CustomRuleViewController customRules]
+                          };
     return ret;
 }
 
